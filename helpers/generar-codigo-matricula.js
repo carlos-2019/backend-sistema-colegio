@@ -1,0 +1,9 @@
+
+
+const generarCodigo = () =>{
+
+}
+
+module.exports = {
+
+}

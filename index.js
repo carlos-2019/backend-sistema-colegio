@@ -22,6 +22,10 @@ app.use('/api/login', require('./routes/auth'));
 app.use('/api/profesor', require('./routes/profesor'));
 app.use('/api/todo', require('./routes/busquedas'));
 app.use('/api/upload', require('./routes/uploads'));
+app.use('/api/semestre', require('./routes/semestre'));
+app.use('/api/curso', require('./routes/curso'));
+app.use('/api/grado', require('./routes/grado'));
+app.use('/api/matricula', require('./routes/matricula'));
 
 app.listen(process.env.PORT, () => {
     console.log('servidor corriendo en el puesto: ' + process.env.PORT);
