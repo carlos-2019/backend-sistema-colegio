@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Alumno = require('../models/alumno');
 const Profesor = require('../models/profesor');
+const Empleado = require('../models/empleados');
 
 const borrarImagen = (path) => {
     if (fs.existsSync(path)) {
@@ -40,7 +41,21 @@ const actualizarImagen = async (tipo, id, nombreArchivo) => {
             await profesor.save();
             return true;
             break;
-    
+            
+        case 'empleado':
+            const empleado = await Empleado.findById(id);
+            if (!empleado) {
+                console.log('No se encontro al empleado');
+                return false;
+            }
+            pathViejo = `./uploads/empleado/${empleado.img}`
+            borrarImagen(pathViejo);
+
+            empleado.img = nombreArchivo;
+            await empleado.save();
+            return true;
+            break;
+
         default:
             break;
     }

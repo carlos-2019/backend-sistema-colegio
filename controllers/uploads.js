@@ -10,11 +10,11 @@ const fileUpload = (req = request, res = response) => {
     const id = req.params.id;
 
     // VALIDAD TIPO
-    const tiposValidos = ['alumno', 'profesor'];
+    const tiposValidos = ['alumno', 'profesor', 'empleado'];
     if (!tiposValidos.includes(tipo)) {
         return res.status(400).json({
             ok: false,
-            mensaje: ' No es un alumno, profesor (tipo)'
+            mensaje: ' No es un alumno, profesor, empleado (tipo)'
         });
     }
 

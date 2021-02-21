@@ -1,10 +1,7 @@
 const {Schema, model} = require('mongoose');
 
-const AlumnoSchema = Schema({
-    codigo: {
-        type: String,
-        required: true,
-    },
+const EmpleadoShema = Schema({
+    
     nombre: {
         type: String,
         required: true,
@@ -45,6 +42,11 @@ const AlumnoSchema = Schema({
         type: String,
         required: true
     },
+    area: {
+        type: Schema.Types.ObjectId,
+        ref: 'Area',
+        required: true
+    },
     img: {
         type: String,
         required: false
@@ -52,7 +54,7 @@ const AlumnoSchema = Schema({
     role: {
         type: String,
         required: true,
-        default: 'ALUMNO_ROLE'
+        default: 'PERSONAL_ROLE'
     },
     estado: {
         type: Boolean,
@@ -60,4 +62,4 @@ const AlumnoSchema = Schema({
     }
 });
 
-module.exports = model('Alumno', AlumnoSchema);
+module.exports = model('Empleado', EmpleadoShema);

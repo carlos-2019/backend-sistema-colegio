@@ -22,6 +22,18 @@ const cargarAlumnos = async (req, res = response) => {
     });
 }
 
+const cargarAlumnoPorId = async (req, res = response) => {
+
+    const uid = req.params.id;
+    
+    const alumno = await Alumno.findById(uid);
+
+    res.status(200).json({
+        ok: true,
+        alumno: alumno
+    });
+}
+
 const crearAlumno = async (req, res = response) => {
 
     const {dni, password} = req.body;
@@ -143,6 +155,7 @@ const eliminarAlumno = async (req, res = response) => {
 
 module.exports = {
     cargarAlumnos,
+    cargarAlumnoPorId,
     crearAlumno,
     actualizarAlumno,
     eliminarAlumno

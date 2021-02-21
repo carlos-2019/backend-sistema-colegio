@@ -1,8 +1,10 @@
 const {response} = require('express');
 const Alumno = require('../models/alumno');
 const Profesor = require('../models/profesor');
+const Empleado = require('../models/empleados');
 const bcrypt = require('bcryptjs');
 const {generarJWT} = require('../helpers/jwt');
+const {getMenuFrontEnd} = require('../helpers/menu-frontend');
 
 const login = async (req, res = response) => {
     
@@ -15,12 +17,19 @@ const login = async (req, res = response) => {
         if (!usuarioDB) {
             // SI NO ENCUENTRA ESE DNI EN EL ALUMNO BUSCA POR PROFESOR
             usuarioDB = await Profesor.findOne({ dni });
+
+            // SI NO ENCUENTRA ESE DNI EN EL ALUMNO BUSCA POR EMPLEADO
             if (!usuarioDB) {
-                // SI NO ENCUENTRA RETORNA UN ERROR 404
-                return res.status(404).json({
-                ok: false,
-                mensaje: 'Dni no valido'
-                });
+                
+                usuarioDB = await Empleado.findOne({ dni });
+
+                if (!usuarioDB) {
+                    // SI NO ENCUENTRA RETORNA UN ERROR 404
+                    return res.status(404).json({
+                    ok: false,
+                    mensaje: 'Dni no valido'
+                    });
+                }
             }
         }
 
@@ -35,9 +44,12 @@ const login = async (req, res = response) => {
 
         // GENERAR EL TOKEN
         const token = await generarJWT(usuarioDB._id);
+
         res.status(200).json({
             ok: true,
-            token: token
+            token: token,
+            menu: getMenuFrontEnd(usuarioDB.role),
+            uid: usuarioDB._id
         });
         
     } catch (error) {
@@ -51,6 +63,7 @@ const login = async (req, res = response) => {
 
 // PARA RENOVAR EL TOKEN
 const newToken = async (req, res = response) => {
+
     const uid = req.uid;
 
     // GENERAR EL TOKEN

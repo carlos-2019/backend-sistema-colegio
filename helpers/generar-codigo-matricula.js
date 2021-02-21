@@ -1,9 +1,0 @@
-
-
-const generarCodigo = () =>{
-
-}
-
-module.exports = {
-
-}
